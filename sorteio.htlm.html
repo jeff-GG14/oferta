@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Oferta Limitada</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: white;
+      text-align: center;
+      padding: 50px;
+    }
+
+    .container {
+      background: rgba(0,0,0,0.6);
+      padding: 30px;
+      border-radius: 15px;
+      display: inline-block;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    .timer {
+      font-size: 2em;
+      margin: 20px 0;
+      color: #00ffcc;
+    }
+
+    .expired {
+      color: red;
+      font-size: 1.5em;
+    }
+
+    button {
+      background: #00ffcc;
+      border: none;
+      padding: 15px 25px;
+      font-size: 1em;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #00cc99;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>🔥 Oferta Especial!</h1>
+    <p>Essa promoção acaba em:</p>
+    <div class="timer" id="timer"></div>
+    <button onclick="comprar()">Comprar Agora</button>
+    <p id="mensagem"></p>
+  </div>
+
+  <script>
+    // Defina o tempo da oferta (ex: 1 hora a partir de agora)
+    const tempoFinal = new Date().getTime() + (60 * 60 * 1000);
+
+    const timerElemento = document.getElementById("timer");
+    const mensagem = document.getElementById("mensagem");
+
+    const contador = setInterval(() => {
+      const agora = new Date().getTime();
+      const diferenca = tempoFinal - agora;
+
+      if (diferenca <= 0) {
+        clearInterval(contador);
+        timerElemento.innerHTML = "00:00:00";
+        mensagem.innerHTML = "❌ A oferta expirou!";
+        mensagem.classList.add("expired");
+        return;
+      }
+
+      const horas = Math.floor((diferenca / (1000 * 60 * 60)) % 24);
+      const minutos = Math.floor((diferenca / (1000 * 60)) % 60);
+      const segundos = Math.floor((diferenca / 1000) % 60);
+
+      timerElemento.innerHTML =
+        `${String(horas).padStart(2, '0')}:` +
+        `${String(minutos).padStart(2, '0')}:` +
+        `${String(segundos).padStart(2, '0')}`;
+
+    }, 1000);
+
+    function comprar() {
+      const agora = new Date().getTime();
+
+      if (agora > tempoFinal) {
+        alert("A oferta já expirou!");
+      } else {
+        alert("Compra realizada com sucesso!");
+      }
+    }
+  </script>
+
+</body>
+</html>
